@@ -154,6 +154,7 @@ mdadm::array { '/dev/md1':
   devices => ['/dev/sdb', '/dev/sdc'],
   level   => 0,
 }
+```
 
 Limitations
 -----------
