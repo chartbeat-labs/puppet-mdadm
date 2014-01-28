@@ -8,7 +8,10 @@ describe 'mdadm', :type => :class do
     }}
 
     context 'with no parameters' do
-      it { should contain_service('mdadm') }
+      it { should contain_service('mdadm').with({
+        :ensure => 'running',
+        })
+      }
     end
 
     context 'with different service name' do

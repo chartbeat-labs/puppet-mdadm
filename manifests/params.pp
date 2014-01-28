@@ -9,6 +9,7 @@ class mdadm::params {
       $package_name = 'mdadm'
       $package_ensure = 'present'
       $service_name = 'mdadm'
+      $service_ensure = 'running'
       $service_manage = true
       $include_cron = true
     }
