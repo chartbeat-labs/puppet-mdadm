@@ -9,16 +9,18 @@ describe 'mdadm::array', :type => :define do
     :osfamily => 'Debian'
   }}
 
-  let(:params) {{
-    'devices' => ['/dev/sdb', '/dev/sdc'],
-    'level' => 0,
-  }}
-
   context 'when creating an array' do
     let(:params) {{
       'ensure' => 'created',
       'devices' => ['/dev/sdb', '/dev/sdc'],
       'level' => 0,
+      'active_devices' => 2,
+      'spare_devices' => 0,
+      'chunk' => 512,
+      'parity' => 'left-symmetric',
+      'bitmap' => '/tmp/bitmap',
+      'force' => true,
+      'generate_conf' => true,
     }}
 
     it { should contain_class('mdadm') }

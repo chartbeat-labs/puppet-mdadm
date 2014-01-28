@@ -1,5 +1,3 @@
-require 'puppet/parameter/boolean'
-
 Puppet::Type.newtype(:mdadm) do
 
   desc <<-EOT
@@ -78,7 +76,7 @@ Puppet::Type.newtype(:mdadm) do
   newparam(:active_devices) do
     desc <<-EOT
       An optional value used to specify the number of devices that are active.
-      Cannot be more than the number of devices. Defaults to all devices.'
+      Cannot be more than the number of devices. Defaults to all devices.
     EOT
 
     defaultto do
@@ -91,7 +89,7 @@ Puppet::Type.newtype(:mdadm) do
   end
 
   newparam(:chunk) do
-    desc 'Optionally specify the chunksize in kibibytes'
+    desc 'Optionally specify the chunksize in kibibytes.'
   end
 
   newparam(:parity) do
@@ -104,17 +102,19 @@ Puppet::Type.newtype(:mdadm) do
     desc 'Create a bitmap for the array with the given filename'
   end
 
-  newparam(:generate_conf, :boolean => true, :parent => Puppet::Parameter::Boolean) do
+  newparam(:generate_conf, :boolean => true) do
     desc 'Whether to generate the mdadm.conf file'
+    newvalues(:true, :false)
     defaultto :true
   end
 
-  newparam(:force, :boolean => true, :parent => Puppet::Parameter::Boolean) do
+  newparam(:force, :boolean => true) do
     desc <<-EOT
       Whether to force the action. Useful for when the underlying devices had
       previously been created on an array. Can be destructive if the underlying
       devices were part of different arrays. Use with caution.
     EOT
+    newvalues(:true, :false)
     defaultto :false
   end
 

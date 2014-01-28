@@ -77,8 +77,8 @@ describe Puppet::Type.type(:mdadm) do
                  :chunk => nil,
                  :parity => nil,
                  :bitmap => nil,
-                 :generate_conf => true,
-                 :force => false,
+                 :generate_conf => :true,
+                 :force => :false,
     }
 
     defaults.each_pair do |param, value|
@@ -98,8 +98,8 @@ describe Puppet::Type.type(:mdadm) do
                           :spare_devices => 1,
                           :parity => 'right-symmetric',
                           :bitmap => '/tmp/bitmap',
-                          :generate_conf => false,
-                          :force => true,
+                          :generate_conf => :false,
+                          :force => :true,
                           :provider => provider)
 
     end
@@ -111,8 +111,8 @@ describe Puppet::Type.type(:mdadm) do
     it { resource[:spare_devices].should == 1}
     it { resource[:parity].should == :'right-symmetric' }
     it { resource[:bitmap].should == '/tmp/bitmap' }
-    it { resource[:generate_conf].should == false }
-    it { resource[:force].should == true }
+    it { resource[:generate_conf].should == :false }
+    it { resource[:force].should == :true }
   end
 
   describe 'resource with invalid ensure' do
@@ -124,7 +124,7 @@ describe Puppet::Type.type(:mdadm) do
                           :provider => provider)
 
     end
-    it { expect { resource }.to raise_error(Puppet::ResourceError,
+    it { expect { resource }.to raise_error(Puppet::Error,
         /Invalid value :present. Valid values are created, assembled, absent./)
     }
   end
@@ -138,7 +138,7 @@ describe Puppet::Type.type(:mdadm) do
                           :provider => provider)
 
     end
-    it { expect { resource }.to raise_error(Puppet::ResourceError, /expected a boolean value/) }
+    it { expect { resource }.to raise_error(Puppet::Error) }
   end
 
   describe 'resource with invalid :force' do
@@ -150,14 +150,14 @@ describe Puppet::Type.type(:mdadm) do
                           :provider => provider)
 
     end
-    it { expect { resource }.to raise_error(Puppet::ResourceError, /expected a boolean value/) }
+    it { expect { resource }.to raise_error(Puppet::Error) }
   end
 
   describe 'resource without required params' do
     let(:resource) do
       described_class.new(:name => '/dev/md1')
     end
-    it { expect { resource }.to raise_error(Puppet::ResourceError, /Both devices and level are required attributes/ ) }
+    it { expect { resource }.to raise_error(Puppet::Error, /Both devices and level are required attributes/ ) }
   end
 
   describe 'resource with mismatched :level and :parity' do
@@ -168,7 +168,7 @@ describe Puppet::Type.type(:mdadm) do
                           :parity => 'left-asymmetric',
                           :provider => provider)
     end
-    it { expect { resource }.to raise_error(Puppet::ResourceError, /Parity can only be set on raid5\/6/) }
+    it { expect { resource }.to raise_error(Puppet::Error, /Parity can only be set on raid5\/6/) }
   end
 
   describe 'resource with invalid parity' do
@@ -179,7 +179,7 @@ describe Puppet::Type.type(:mdadm) do
                           :parity => 'foo',
                           :provider => provider)
     end
-    it { expect { resource }.to raise_error(Puppet::ResourceError,
+    it { expect { resource }.to raise_error(Puppet::Error,
         /Invalid value "foo". Valid values are left-symmetric, right-symmetric, left-asymmetric, right-asymmetric/ ) }
   end
 
