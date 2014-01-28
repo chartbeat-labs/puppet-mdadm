@@ -78,7 +78,7 @@ Puppet::Type.newtype(:mdadm) do
   newparam(:active_devices) do
     desc <<-EOT
       An optional value used to specify the number of devices that are active.
-      Cannot be more than the number of devices. Defaults to all devices.'
+      Cannot be more than the number of devices. Defaults to all devices.
     EOT
 
     defaultto do
@@ -91,7 +91,7 @@ Puppet::Type.newtype(:mdadm) do
   end
 
   newparam(:chunk) do
-    desc 'Optionally specify the chunksize in kibibytes'
+    desc 'Optionally specify the chunksize in kibibytes.'
   end
 
   newparam(:parity) do
