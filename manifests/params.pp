@@ -11,6 +11,12 @@ class mdadm::params {
       $service_name = 'mdadm'
       $service_ensure = 'running'
       $service_manage = true
+      # Older mdadm packages don't have a service status
+      if versioncmp($lsbdistrelease, '12') < 0 {
+        $service_hasstatus = false
+      } else {
+        $service_hasstatus = true
+      }
       $include_cron = true
     }
     default: {

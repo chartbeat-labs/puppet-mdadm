@@ -9,7 +9,7 @@ class mdadm::service {
     service { $::mdadm::service_name:
       ensure     => $::mdadm::service_ensure,
       enable     => true,
-      hasstatus  => true,
+      hasstatus  => $::mdadm::service_hasstatus,
       hasrestart => true,
     }
   }
