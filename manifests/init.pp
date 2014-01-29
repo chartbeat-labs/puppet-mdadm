@@ -32,6 +32,8 @@ class mdadm (
                           $mdadm::params::service_ensure),
   $service_manage = hiera('mdadm::service_manage',
                           $mdadm::params::service_manage),
+  $service_hasstatus = hiera('mdadm::service_hasstatus',
+                          $mdadm::params::service_hasstatus),
   $include_cron = hiera('mdadm::include_cron', $mdadm::params::include_cron),
 
 ) inherits mdadm::params {
