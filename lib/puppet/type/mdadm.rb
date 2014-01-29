@@ -120,6 +120,20 @@ Puppet::Type.newtype(:mdadm) do
     defaultto :true
   end
 
+  newparam(:update_initramfs, :boolean => true) do
+    desc <<-EOT
+      Whether to update the ram filesystem with the md device. Only makes sense
+      if you are also generating the mdadm.conf.
+
+      This can work around a problem with updated kernels not seeing the md
+      device and assigning a random device number.
+
+      See http://ubuntuforums.org/showthread.php?t=1764861 for more info
+    EOT
+    newvalues(:true, :false)
+    defaultto :true
+  end
+
   newparam(:force, :boolean => true) do
     desc <<-EOT
       Whether to force the action. Useful for when the underlying devices had

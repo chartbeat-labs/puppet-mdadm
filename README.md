@@ -3,7 +3,7 @@ Puppet Mdadm Module
 
 Puppet module for managing md raid arrays.
 
-[![Build Status](https://travis-ci.org/butlern/puppet-mdadm.png)](https://travis-ci.org/butlern/puppet-mdadm)
+[![Build Status](https://travis-ci.org/chartbeat-labs/puppet-mdadm.png)](https://travis-ci.org/chartbeat-labs/puppet-mdadm)
 
 Usage
 -----
@@ -107,6 +107,21 @@ mdadm { '/dev/md1' :
 }
 ```
 
+### Metadata
+
+You can specify the metadata superblock type by passing the metadata parameter.
+See mdadm(8) for more info. The default is v0.9. It only makes sense for the create
+operation.
+
+```puppet
+mdadm { '/dev/md1' :
+  ensure    => 'created',
+  devices   => ['/dev/sdb', '/dev/sdc'],
+  level     => 0,
+  metadata  => '0.9',
+}
+```
+
 ### Generating the conf
 
 By default, the mdadm type will generate the mdadm.conf file. This is so that the
@@ -119,6 +134,31 @@ mdadm { '/dev/md1' :
   devices       => ['/dev/sdb', '/dev/sdc'],
   level         => 0,
   generate_conf => false,
+}
+```
+
+### Updating ramfs
+
+By default, the mdadm type will update initrd with the update-initramfs -u command.
+The reason for this is to allow devices created by md to be seen by the kernel at boot
+to allow for devices to be mounted as the root device if desired. It also seems to fix
+an issue seen in more recent kernels/mdadm. What happens is you create an md device of
+say /dev/md1, you don't update initrd, the kernel on boot sees that certain devices
+are members of an array but doesn't know the array name (/dev/md1) and so it assigns
+an arbitrary name, /dev/md126, and starts the array. This can cause entries in /etc/fstab
+to not be found, causing mount on boot problems.
+
+The solution is to just update initrd with the devices created by md, so this option
+defaults to true.
+
+You can disable by passing update_initramfs => false.
+
+```puppet
+mdadm { '/dev/md1' :
+  ensure           => 'assembled',
+  devices          => ['/dev/sdb', '/dev/sdc'],
+  level            => 0,
+  update_initramfs => false,
 }
 ```
 
