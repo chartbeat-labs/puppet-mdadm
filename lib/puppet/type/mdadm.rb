@@ -102,6 +102,18 @@ Puppet::Type.newtype(:mdadm) do
     desc 'Create a bitmap for the array with the given filename'
   end
 
+  newparam(:metadata) do
+    desc <<-EOT
+      Default style of RAID metadata (superblock) to be used. The default is
+      0.9. There seems to be an issue with the 1.2 on newer mdadm/kernels with
+      the --name parameter getting set.
+
+      See http://ubuntuforums.org/showthread.php?t=1764861 for more info
+    EOT
+    newvalues('0.9', '1.0', '1.1', '1.2')
+    defaultto '0.9'
+  end
+
   newparam(:generate_conf, :boolean => true) do
     desc 'Whether to generate the mdadm.conf file'
     newvalues(:true, :false)

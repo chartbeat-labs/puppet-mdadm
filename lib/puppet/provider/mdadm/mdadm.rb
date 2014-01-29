@@ -10,6 +10,7 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
   def create
     cmd = [command(:mdadm_cmd)]
     cmd << "--create"
+    cmd << "-e #{resource[:metadata]}"
     cmd << resource.name
     cmd << "--level=#{resource[:level]}"
     cmd << "--raid-devices=#{resource[:active_devices] || resource[:devices].size}"

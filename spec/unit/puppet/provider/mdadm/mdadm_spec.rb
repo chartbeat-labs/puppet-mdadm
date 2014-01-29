@@ -11,6 +11,7 @@ describe provider_class do
     @resource.stubs(:name).returns('/dev/md1')
     @resource.stubs(:[]).with(:devices).returns(['/dev/sdb', '/dev/sdc'])
     @resource.stubs(:[]).with(:level).returns(0)
+    @resource.stubs(:[]).with(:metadata).returns('0.9')
     @resource.stubs(:[]).with(:active_devices).returns(nil)
     @resource.stubs(:[]).with(:spare_devices).returns(nil)
     @resource.stubs(:[]).with(:parity).returns(nil)
@@ -26,7 +27,7 @@ describe provider_class do
 
   describe '#create' do
     it "should execute the correct mdadm command" do
-      @provider.expects(:execute).with('/sbin/mdadm --create /dev/md1 --level=0 --raid-devices=2 /dev/sdb /dev/sdc')
+      @provider.expects(:execute).with('/sbin/mdadm --create -e 0.9 /dev/md1 --level=0 --raid-devices=2 /dev/sdb /dev/sdc')
       @provider.expects(:make_conf)
       @provider.create
     end
@@ -35,11 +36,12 @@ describe provider_class do
       @resource.stubs(:[]).with(:devices).returns(['/dev/sdb', '/dev/sdc', '/dev/sdd', '/dev/sde'])
       @resource.stubs(:[]).with(:active_devices).returns(3)
       @resource.stubs(:[]).with(:spare_devices).returns(1)
+      @resource.stubs(:[]).with(:metadata).returns('1.2')
       @resource.stubs(:[]).with(:parity).returns('right-symmetric')
       @resource.stubs(:[]).with(:chunk).returns('512')
       @resource.stubs(:[]).with(:force).returns(true)
       @resource.stubs(:[]).with(:generate_conf).returns(false)
-      @provider.expects(:execute).with('/usr/bin/yes | /sbin/mdadm --create /dev/md1 --level=0 --raid-devices=3 --spare-devices=1 --parity=right-symmetric --chunk=512 /dev/sdb /dev/sdc /dev/sdd /dev/sde')
+      @provider.expects(:execute).with('/usr/bin/yes | /sbin/mdadm --create -e 1.2 /dev/md1 --level=0 --raid-devices=3 --spare-devices=1 --parity=right-symmetric --chunk=512 /dev/sdb /dev/sdc /dev/sdd /dev/sde')
       @provider.create
     end
   end

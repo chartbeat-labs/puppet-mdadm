@@ -61,6 +61,7 @@ define mdadm::array (
   $bitmap = undef,
   $force = undef,
   $generate_conf = undef,
+  $metadata = undef,
 ) {
   include mdadm
 
@@ -75,5 +76,6 @@ define mdadm::array (
     bitmap         => $bitmap,
     force          => $force,
     generate_conf  => $generate_conf,
+    metadata       => $metadata,
   }
 }
