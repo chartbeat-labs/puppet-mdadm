@@ -22,6 +22,7 @@ describe 'mdadm::array', :type => :define do
       'metadata' => '0.9',
       'force' => true,
       'generate_conf' => true,
+      'update_initramfs' => true,
     }}
 
     it { should contain_class('mdadm') }

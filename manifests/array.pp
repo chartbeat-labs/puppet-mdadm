@@ -46,6 +46,9 @@
 # [*generate_conf*]
 #   Boolean. Whether to generate the mdadm.conf file. Default is true.
 #
+# [*update_initramfs*]
+#   Boolean. Whether to update initrd with the new device. Default is true.
+#
 # === Usage
 #
 # mdadm::array { '/dev/md1':
@@ -66,6 +69,7 @@ define mdadm::array (
   $metadata = undef,
   $force = undef,
   $generate_conf = undef,
+  $update_initramfs = undef,
 ) {
   include mdadm
 
@@ -81,5 +85,6 @@ define mdadm::array (
     metadata         => $metadata,
     force            => $force,
     generate_conf    => $generate_conf,
+    update_initramfs => $update_initramfs,
   }
 }

@@ -137,6 +137,31 @@ mdadm { '/dev/md1' :
 }
 ```
 
+### Updating ramfs
+
+By default, the mdadm type will update initrd with the update-initramfs -u command.
+The reason for this is to allow devices created by md to be seen by the kernel at boot
+to allow for devices to be mounted as the root device if desired. It also seems to fix
+an issue seen in more recent kernels/mdadm. What happens is you create an md device of
+say /dev/md1, you don't update initrd, the kernel on boot sees that certain devices
+are members of an array but doesn't know the array name (/dev/md1) and so it assigns
+an arbitrary name, /dev/md126, and starts the array. This can cause entries in /etc/fstab
+to not be found, causing mount on boot problems.
+
+The solution is to just update initrd with the devices created by md, so this option
+defaults to true.
+
+You can disable by passing update_initramfs => false.
+
+```puppet
+mdadm { '/dev/md1' :
+  ensure           => 'assembled',
+  devices          => ['/dev/sdb', '/dev/sdc'],
+  level            => 0,
+  update_initramfs => false,
+}
+```
+
 ### Defined Type mdadm::array
 
 Because the mdadm provider relies upon the mdadm command to be present on the system
