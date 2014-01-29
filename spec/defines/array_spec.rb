@@ -19,6 +19,7 @@ describe 'mdadm::array', :type => :define do
       'chunk' => 512,
       'parity' => 'left-symmetric',
       'bitmap' => '/tmp/bitmap',
+      'metadata' => '0.9',
       'force' => true,
       'generate_conf' => true,
     }}

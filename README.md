@@ -107,6 +107,21 @@ mdadm { '/dev/md1' :
 }
 ```
 
+### Metadata
+
+You can specify the metadata superblock type by passing the metadata parameter.
+See mdadm(8) for more info. The default is v0.9. It only makes sense for the create
+operation.
+
+```puppet
+mdadm { '/dev/md1' :
+  ensure    => 'created',
+  devices   => ['/dev/sdb', '/dev/sdc'],
+  level     => 0,
+  metadata  => '0.9',
+}
+```
+
 ### Generating the conf
 
 By default, the mdadm type will generate the mdadm.conf file. This is so that the

@@ -34,6 +34,10 @@
 # [*bitmap*]
 #   Create a bitmap for the array with the given filename.
 #
+# [*metadata*]
+#   Declare the style of superblock (raid metadata) to be used. The default is
+#   0.90 for created, and to guess for other operations.
+#
 # [*force*]
 #   Whether to force the action. Useful for when the underlying devices had
 #   previously been created on an array. Can be destructive if the underlying
@@ -59,23 +63,23 @@ define mdadm::array (
   $chunk = undef,
   $parity = undef,
   $bitmap = undef,
+  $metadata = undef,
   $force = undef,
   $generate_conf = undef,
-  $metadata = undef,
 ) {
   include mdadm
 
   mdadm { $name :
-    ensure         => $ensure,
-    level          => $level,
-    devices        => $devices,
-    active_devices => $active_devices,
-    spare_devices  => $spare_devices,
-    chunk          => $chunk,
-    parity         => $parity,
-    bitmap         => $bitmap,
-    force          => $force,
-    generate_conf  => $generate_conf,
-    metadata       => $metadata,
+    ensure           => $ensure,
+    level            => $level,
+    devices          => $devices,
+    active_devices   => $active_devices,
+    spare_devices    => $spare_devices,
+    chunk            => $chunk,
+    parity           => $parity,
+    bitmap           => $bitmap,
+    metadata         => $metadata,
+    force            => $force,
+    generate_conf    => $generate_conf,
   }
 }
