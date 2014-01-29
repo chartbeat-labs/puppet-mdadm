@@ -44,7 +44,7 @@ describe Puppet::Type.type(:mdadm) do
   end
 
   parameters = [ :devices, :level, :active_devices, :spare_devices, :parity,
-                 :chunk, :force, :generate_conf]
+                 :chunk, :force, :generate_conf, :update_initramfs]
 
   parameters.each do |parameter|
     it "should have a #{parameter} parameter" do
@@ -78,6 +78,7 @@ describe Puppet::Type.type(:mdadm) do
                  :parity => nil,
                  :bitmap => nil,
                  :generate_conf => :true,
+                 :update_initramfs => :true,
                  :force => :false,
     }
 
@@ -99,6 +100,7 @@ describe Puppet::Type.type(:mdadm) do
                           :parity => 'right-symmetric',
                           :bitmap => '/tmp/bitmap',
                           :generate_conf => :false,
+                          :update_initramfs => :false,
                           :force => :true,
                           :provider => provider)
 
@@ -112,6 +114,7 @@ describe Puppet::Type.type(:mdadm) do
     it { resource[:parity].should == :'right-symmetric' }
     it { resource[:bitmap].should == '/tmp/bitmap' }
     it { resource[:generate_conf].should == :false }
+    it { resource[:update_initramfs].should == :false }
     it { resource[:force].should == :true }
   end
 
@@ -129,28 +132,19 @@ describe Puppet::Type.type(:mdadm) do
     }
   end
 
-  describe 'resource with invalid :generate_conf' do
-    let(:resource) do
-      described_class.new(:name => '/dev/md1',
-                          :devices => ['/dev/sdb', '/dev/sdc'],
-                          :level => 0,
-                          :generate_conf => 'foo',
-                          :provider => provider)
+  invalid_params = [ :generate_conf, :update_initramfs, :force ]
 
+  invalid_params.each do |param|
+    describe "resource with invalid #{param}" do
+      let(:resource) do
+        described_class.new(:name => '/dev/md1',
+                            :devices => ['/dev/sdb', '/dev/sdc'],
+                            :level => 0,
+                            param => 'foo',
+                            :provider => provider)
+      end
+      it { expect { resource }.to raise_error(Puppet::Error) }
     end
-    it { expect { resource }.to raise_error(Puppet::Error) }
-  end
-
-  describe 'resource with invalid :force' do
-    let(:resource) do
-      described_class.new(:name => '/dev/md1',
-                          :devices => ['/dev/sdb', '/dev/sdc'],
-                          :level => 0,
-                          :force => 'foo',
-                          :provider => provider)
-
-    end
-    it { expect { resource }.to raise_error(Puppet::Error) }
   end
 
   describe 'resource without required params' do

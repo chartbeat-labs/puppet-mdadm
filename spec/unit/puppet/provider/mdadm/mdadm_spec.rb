@@ -18,17 +18,20 @@ describe provider_class do
     @resource.stubs(:[]).with(:chunk).returns(nil)
     @resource.stubs(:[]).with(:force).returns(false)
     @resource.stubs(:[]).with(:generate_conf).returns(true)
+    @resource.stubs(:[]).with(:update_initramfs).returns(true)
 
     @provider = provider_class.new(@resource)
     @provider.class.stubs(:command).with(:mdadm_cmd).returns('/sbin/mdadm')
     @provider.class.stubs(:command).with(:mkconf).returns('/usr/share/mdadm/mkconf')
     @provider.class.stubs(:command).with(:yes).returns('/usr/bin/yes')
+    @provider.class.stubs(:command).with(:update_initramfs).returns('/usr/sbin/update_initramfs')
   end
 
   describe '#create' do
     it "should execute the correct mdadm command" do
       @provider.expects(:execute).with('/sbin/mdadm --create -e 0.9 /dev/md1 --level=0 --raid-devices=2 /dev/sdb /dev/sdc')
       @provider.expects(:make_conf)
+      @provider.expects(:update_initramfs)
       @provider.create
     end
 
@@ -41,6 +44,7 @@ describe provider_class do
       @resource.stubs(:[]).with(:chunk).returns('512')
       @resource.stubs(:[]).with(:force).returns(true)
       @resource.stubs(:[]).with(:generate_conf).returns(false)
+      @resource.stubs(:[]).with(:update_initramfs).returns(false)
       @provider.expects(:execute).with('/usr/bin/yes | /sbin/mdadm --create -e 1.2 /dev/md1 --level=0 --raid-devices=3 --spare-devices=1 --parity=right-symmetric --chunk=512 /dev/sdb /dev/sdc /dev/sdd /dev/sde')
       @provider.create
     end
@@ -51,11 +55,13 @@ describe provider_class do
       @provider.expects(:execute).with(['/sbin/mdadm', '--assemble', '/dev/md1',
                                         ['/dev/sdb', '/dev/sdc']])
       @provider.expects(:make_conf)
+      @provider.expects(:update_initramfs)
       @provider.assemble
     end
 
     it 'should include the supplied parameters' do
       @resource.stubs(:[]).with(:generate_conf).returns(false)
+      @resource.stubs(:[]).with(:update_initramfs).returns(false)
       @provider.expects(:execute).with(['/sbin/mdadm', '--assemble', '/dev/md1',
                                         ['/dev/sdb', '/dev/sdc']])
       @provider.assemble
@@ -66,11 +72,13 @@ describe provider_class do
     it 'should execute the correct mdadm command' do
       @provider.expects(:execute).with(['/sbin/mdadm', '--misc', '--stop', '/dev/md1'])
       @provider.expects(:make_conf)
+      @provider.expects(:update_initramfs)
       @provider.stop
     end
 
     it 'should include the supplied parameters' do
       @resource.stubs(:[]).with(:generate_conf).returns(false)
+      @resource.stubs(:[]).with(:update_initramfs).returns(false)
       @provider.expects(:execute).with(['/sbin/mdadm', '--misc', '--stop', '/dev/md1'])
       @provider.stop
     end

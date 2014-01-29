@@ -5,7 +5,8 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
 
   commands  :mdadm_cmd => 'mdadm',
             :mkconf => '/usr/share/mdadm/mkconf',
-            :yes => 'yes'
+            :yes => 'yes',
+            :update_initramfs => 'update-initramfs'
 
   def create
     cmd = [command(:mdadm_cmd)]
@@ -25,6 +26,7 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
 
     execute(cmd.join(" "))
     make_conf if resource[:generate_conf]
+    update_initramfs if resource[:update_initramfs]
   end
 
   def assemble
@@ -34,6 +36,7 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
     cmd << resource[:devices]
     execute(cmd)
     make_conf if resource[:generate_conf]
+    update_initramfs if resource[:update_initramfs]
   end
 
   def stop
@@ -43,6 +46,7 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
     cmd << resource.name
     execute(cmd)
     make_conf if resource[:generate_conf]
+    update_initramfs if resource[:update_initramfs]
   end
 
   def exists?
@@ -65,5 +69,9 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
 
   def make_conf
     execute([command(:mkconf), "force-generate"])
+  end
+
+  def update_initramfs
+    execute([command(:update_initramfs), '-u'])
   end
 end
