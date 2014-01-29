@@ -3,7 +3,7 @@ Puppet Mdadm Module
 
 Puppet module for managing md raid arrays.
 
-[![Build Status](https://travis-ci.org/butlern/puppet-mdadm.png)](https://travis-ci.org/butlern/puppet-mdadm)
+[![Build Status](https://travis-ci.org/chartbeat-labs/puppet-mdadm.png)](https://travis-ci.org/chartbeat-labs/puppet-mdadm)
 
 Usage
 -----
