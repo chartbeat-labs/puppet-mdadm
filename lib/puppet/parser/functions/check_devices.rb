@@ -1,4 +1,3 @@
-require 'puppet'
 module Puppet::Parser::Functions
   newfunction(:check_devices, :type => :rvalue, :doc => "\
     Check that devices exist and are block devices.
