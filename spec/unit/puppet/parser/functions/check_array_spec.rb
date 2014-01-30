@@ -9,23 +9,25 @@ describe 'check_devices' do
     end
 
     it 'fails without an array' do
-      lambda { scope.function_check_devices(['foo']) }.should raise_error
+      lambda { scope.function_check_devices(['foo']) }.should raise_error(Puppet::ParseError)
     end
 
-    it 'requires an array' do
-      lambda { scope.function_check_devices([['foo']]) }.should_not raise_error
+    it 'requires an array as first arg and a string as second' do
+      lambda { scope.function_check_devices([['foo'], 'bar']) }.should_not raise_error
     end
   end
 
   describe 'device handling' do
     it 'should return true' do
-      File.stubs(:blockdev?).returns(true)
-      scope.function_check_devices([['/dev/sdb', '/dev/sdc']]).should == true
+      scope.function_check_devices([['/dev/sdb', '/dev/sdc'], 'sda,sdb,sdc']).should == true
     end
 
     it 'should return false' do
-      File.stubs(:blockdev?).returns(false)
-      scope.function_check_devices([['/dev/sdb', '/dev/sdc']]).should == false
+      scope.function_check_devices([['/dev/sdb', '/dev/sdc'], 'sda']).should == false
+    end
+
+    it 'should return false on garbage data' do
+      scope.function_check_devices([['foo', 'bar/baz'] , '']).should == false
     end
   end
 end
