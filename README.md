@@ -196,6 +196,28 @@ mdadm::array { '/dev/md1':
 }
 ```
 
+### Functions
+
+#### check_devices()
+
+This function can be used to check whether a given device exists. You pass it an
+array of devices, it expects them to start with '/dev/' and a string of comma
+separated devices on the system, specifically the $blockdevices fact. Returns true
+if *all* devices exist and false otherwise.
+
+```puppet
+$result = check_devices(['/dev/sdb', '/dev/sdc'], $::blockdevices)
+
+if $result {
+  ...do something
+}
+```
+
+This is useful if you are booting a system but your blockdevices aren't available
+at boot and you still want to have the mdadm::array configured in puppet. The mdadm
+type will error out if the devices aren't available so this function allows you to
+pass on applying that resource until the blockdevices become available.
+
 Limitations
 -----------
 
