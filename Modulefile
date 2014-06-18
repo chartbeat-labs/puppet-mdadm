@@ -1,5 +1,5 @@
 name          'chartbeat/mdadm'
-version       '0.0.2'
+version       '0.0.3'
 source        'https://github.com/chartbeat-labs/puppet-mdadm'
 author        'chartbeat'
 license       'MIT'
