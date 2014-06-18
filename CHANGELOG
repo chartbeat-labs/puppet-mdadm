@@ -1,3 +1,6 @@
+2014-06-18 Release 0.0.3
+- Add support for puppet 3.6.x
+
 2014-01-29 Release 0.0.2
 - Add functionality to set metadata
 - Add functionality to update initrd
