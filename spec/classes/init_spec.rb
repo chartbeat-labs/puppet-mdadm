@@ -7,6 +7,7 @@ describe 'mdadm' do
         let(:params) {{ }}
         let(:facts) {{
           :osfamily => osfamily,
+          :lsbdistrelease => '12.04',
         }}
 
         it { should contain_class('mdadm::params') }
@@ -25,7 +26,7 @@ describe 'mdadm' do
         :operatingsystem => 'Nexenta',
       }}
 
-      it { expect { should }.to raise_error(Puppet::Error, /Nexenta not supported/) }
+      it { expect { should raise_error(Puppet::Error, /Nexenta not supported/) }}
     end
   end
 end

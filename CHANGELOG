@@ -1,3 +1,19 @@
+2015-03-09 Release 1.0.0
+- Add groups to the Gemfile
+- Remove rspec-system-puppet in favor of the puppetlabs supported beaker
+- Adds guard support as well as puppet blacksmith
+- Adds boilerplate contrib files.
+- Rakefile changes, most notably including puppet-syntax in test task
+- Migrate from Modulefile to metadata.json
+- metadata.json validation
+- Updates to .gitignore
+- travis-ci updates, adds future parser testing on 3.7, ruby 2.1 matrix tests
+- Pin rspec-puppet to eletrical's fork until pr is merged
+- Tell PuppetSyntax not to fail on deprecation notices
+- Support future parse in tests
+- Update unit tests to new rspec-expectations expect/to syntax
+- Drop support for ruby 1.8.7
+
 2014-06-18 Release 0.0.3
 - Add support for puppet 3.6.x
 

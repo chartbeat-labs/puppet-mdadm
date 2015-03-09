@@ -39,7 +39,7 @@ describe Puppet::Type.type(:mdadm) do
 
   properties.each do |property|
     it "should have a #{property} property" do
-      described_class.attrclass(property).ancestors.should be_include(Puppet::Property)
+      expect(described_class.attrclass(property).ancestors).to be_include(Puppet::Property)
     end
   end
 
@@ -48,29 +48,29 @@ describe Puppet::Type.type(:mdadm) do
 
   parameters.each do |parameter|
     it "should have a #{parameter} parameter" do
-      described_class.attrclass(parameter).ancestors.should be_include(Puppet::Parameter)
+      expect(described_class.attrclass(parameter).ancestors).to be_include(Puppet::Parameter)
     end
   end
 
   describe 'default resource with required params' do
     it 'should have a valid name parameter' do
-      resource[:name].should == '/dev/md1'
+      expect(resource[:name]).to eq('/dev/md1')
     end
 
     it 'should have :ensure set to :created' do
-      resource[:ensure].should == :created
+      expect(resource[:ensure]).to eq(:created)
     end
 
     it 'should have devices set' do
-      resource[:devices].should == ['/dev/sdb', '/dev/sdc']
+      expect(resource[:devices]).to eq(['/dev/sdb', '/dev/sdc'])
     end
 
     it 'should have the raid level set' do
-      resource[:level].should == 0
+      expect(resource[:level]).to eq(0)
     end
 
     it 'should have the active_devices derived' do
-      resource[:active_devices].should == 2
+      expect(resource[:active_devices]).to eq(2)
     end
 
     defaults = { :spare_devices => nil,
@@ -84,7 +84,7 @@ describe Puppet::Type.type(:mdadm) do
 
     defaults.each_pair do |param, value|
       it "should have #{param} parameter set to #{value}" do
-        resource[param].should == value
+        expect(resource[param]).to eq(value)
       end
     end
   end
@@ -106,16 +106,16 @@ describe Puppet::Type.type(:mdadm) do
 
     end
 
-    it { resource[:devices].should == ['/dev/sdb', '/dev/sdc', '/dev/sdd', '/dev/sde'] }
-    it { resource[:level].should == 5 }
-    it { resource[:ensure].should == :created }
-    it { resource[:active_devices].should == 3 }
-    it { resource[:spare_devices].should == 1}
-    it { resource[:parity].should == :'right-symmetric' }
-    it { resource[:bitmap].should == '/tmp/bitmap' }
-    it { resource[:generate_conf].should == :false }
-    it { resource[:update_initramfs].should == :false }
-    it { resource[:force].should == :true }
+    it { expect(resource[:devices]).to eq(['/dev/sdb', '/dev/sdc', '/dev/sdd', '/dev/sde']) }
+    it { expect(resource[:level]).to eq(5) }
+    it { expect(resource[:ensure]).to eq(:created) }
+    it { expect(resource[:active_devices]).to eq(3) }
+    it { expect(resource[:spare_devices]).to eq(1) }
+    it { expect(resource[:parity]).to eq(:'right-symmetric') }
+    it { expect(resource[:bitmap]).to eq('/tmp/bitmap') }
+    it { expect(resource[:generate_conf]).to eq(:false) }
+    it { expect(resource[:update_initramfs]).to eq(:false) }
+    it { expect(resource[:force]).to eq(:true) }
   end
 
   describe 'resource with invalid ensure' do
@@ -180,22 +180,22 @@ describe Puppet::Type.type(:mdadm) do
   describe 'when changing the ensure' do
     it 'should be in sync if it is :absent and should be :absent' do
       ensureprop.should = :absent
-      ensureprop.safe_insync?(:absent).should == true
+      expect(ensureprop.safe_insync?(:absent)).to eq(true)
     end
 
     it 'should be out of sync if it is :absent and should be :created' do
       ensureprop.should = :created
-      ensureprop.safe_insync?(:absent).should == false
+      expect(ensureprop.safe_insync?(:absent)).to eq(false)
     end
 
     it 'should be out of sync if it is :absent and should be :assembled' do
       ensureprop.should = :assembled
-      ensureprop.safe_insync?(:absent).should == false
+      expect(ensureprop.safe_insync?(:absent)).to eq(false)
     end
 
     it 'should be in sync if it should be :stopped and should be :absent' do
       ensureprop.should = :stopped
-      ensureprop.safe_insync?(:absent).should == true
+      expect(ensureprop.safe_insync?(:absent)).to eq(true)
     end
   end
 
@@ -210,7 +210,7 @@ describe Puppet::Type.type(:mdadm) do
       @resource = described_class.new(:name => '/dev/md1', :devices => ['/dev/sdb'], :level => 0, :provider => provider)
       @catalog.add_resource(@resource)
       req = @resource.autorequire
-      req.size.should == 1
+      expect(req.size).to eq(1)
     end
   end
 end
