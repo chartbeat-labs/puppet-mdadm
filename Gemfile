@@ -1,18 +1,23 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Versions can be overridden with environment variables for matrix testing.
-# Travis will remove Gemfile.lock before installing deps.
+group :test do
+  gem "rake"
+  gem "puppet", ENV['PUPPET_VERSION'] || '~> 3.7.0'
+  gem "rspec-puppet", :git => 'https://github.com/electrical/rspec-puppet.git', :ref => '83146c2'
+  gem "puppetlabs_spec_helper"
+  gem "metadata-json-lint"
+  gem "rspec-puppet-facts"
+end
 
-gem 'puppet', ENV['PUPPET_VERSION'] || '~> 3.6.0'
+group :development do
+  gem "travis"
+  gem "travis-lint"
+  gem "vagrant-wrapper"
+  gem "puppet-blacksmith"
+  gem "guard-rake"
+end
 
-gem 'rake'
-gem 'puppet-lint'
-gem 'serverspec'
-gem 'rspec-puppet'
-gem 'rspec-system-puppet'
-gem 'rspec-system-serverspec'
-gem 'puppetlabs_spec_helper'
-
-# Needed since puppet 2.7 doesn't include hiera
-gem 'hiera' if ENV['PUPPET_VERSION'] =~ /2.7/
-gem 'hiera-puppet' if ENV['PUPPET_VERSION'] =~ /2.7/
+group :system_tests do
+  gem "beaker"
+  gem "beaker-rspec"
+end

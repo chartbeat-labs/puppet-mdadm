@@ -87,13 +87,13 @@ describe provider_class do
   describe '#exists?' do
     it 'should return true if array exists' do
       @provider.expects(:execute).with(['/sbin/mdadm', '--detail', '--test', '/dev/md1']).returns(0)
-      @provider.exists?.should == true
+      expect(@provider.exists?).to eq(true)
     end
 
     it 'should return false if array does not exist' do
       @provider.stubs(:execute).raises(Puppet::ExecutionFailure, 'mdadm array /dev/md1 not found')
       $CHILD_STATUS.stubs(:exitstatus).returns(4)
-      @provider.exists?.should == false
+      expect(@provider.exists?).to eq(false)
     end
 
     it 'should raise error if command fails' do

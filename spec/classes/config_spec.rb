@@ -4,6 +4,7 @@ describe 'mdadm', :type => :class do
   describe 'mdadm::config class on Debian' do
     let(:facts) {{
       :osfamily => 'Debian',
+      :lsbdistrelease => '12.04',
     }}
 
     context 'with no parameters' do

@@ -1,0 +1,17 @@
+{
+  "name": "chartbeat/mdadm",
+  "version": "1.0.0",
+  "author": "chartbeat",
+  "summary": "Module to manage mdadm",
+  "license": "MIT",
+  "source": "https://github.com/chartbeat-labs/puppet-mdadm",
+  "project_page": "https://github.com/chartbeat-labs/puppet-mdadm",
+  "issues_url": "https://github.com/chartbeat-labs/puppet-mdadm/issues",
+  "description": "Mdadm module for Puppet",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 3.0.0"
+    }
+  ]
+}
