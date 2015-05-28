@@ -1,6 +1,6 @@
 {
-  "name": "chartbeat/mdadm",
-  "version": "1.0.0",
+  "name": "chartbeat-mdadm",
+  "version": "1.0.1",
   "author": "chartbeat",
   "summary": "Module to manage mdadm",
   "license": "MIT",
