@@ -21,7 +21,12 @@
 #   Boolean. Whether to manage the service or not. Default is true.
 #
 # [*include_cron*]
-#   Boolean. Whether to ensure the mdadm cronjob exists in /etc/cron.d/
+#   Boolean. Whether to put the mdadm cronjob to /etc/cron.d/
+#   /usr/share/mdadm/checkarray --cron --all --idle --quiet
+#
+# [*include_cron_daily*]
+#   Boolean. Whether to put the mdadm cronjob to /etc/cron.daily/
+#   mdadm --monitor --scan --oneshot
 #
 class mdadm (
   $package_name = hiera('mdadm::package_name', $mdadm::params::package_name),
@@ -35,6 +40,8 @@ class mdadm (
   $service_hasstatus = hiera('mdadm::service_hasstatus',
                           $mdadm::params::service_hasstatus),
   $include_cron = hiera('mdadm::include_cron', $mdadm::params::include_cron),
+  $include_cron_daily = hiera('mdadm::include_cron_daily', 
+			  $mdadm::params::include_cron_daily),
 
 ) inherits mdadm::params {
 
