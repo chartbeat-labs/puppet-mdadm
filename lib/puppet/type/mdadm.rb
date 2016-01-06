@@ -93,9 +93,9 @@ Puppet::Type.newtype(:mdadm) do
   end
 
   newparam(:parity) do
-    desc 'The raid parity. Only applicable to raid5/6'
+    desc 'The raid parity. Only applicable to raid5/6/10'
     newvalues('left-symmetric', 'right-symmetric', 'left-asymmetric',
-              'right-asymmetric')
+              'right-asymmetric', 'f2', 'n2', 'o2')
   end
 
   newparam(:bitmap) do
@@ -149,8 +149,8 @@ Puppet::Type.newtype(:mdadm) do
       raise(Puppet::Error, "Both devices and level are required attributes")
     end
 
-    if self[:parity] and not [5, '5', 'raid5', '6', 6, 'raid6'].include?(self[:level])
-      raise(Puppet::Error, "Parity can only be set on raid5/6")
+    if self[:parity] and not [5, '5', 'raid5', '6', 6, 'raid6', 10, '10', 'raid10'].include?(self[:level])
+      raise(Puppet::Error, "Parity can only be set on raid5/6/10")
     end
   end
 

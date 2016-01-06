@@ -28,8 +28,9 @@
 #   Optionally specify the chunksize in kibibytes.
 #
 # [*parity*]
-#   The raid parity. Only applicable to raid5/6  Valid values are
-#   'left-symmetric', 'right-symmetric', 'left-asymmetric', 'right-asymmetric'.
+#   The raid parity. Only applicable to raid5/6/10  Valid values are
+#   'left-symmetric', 'right-symmetric', 'left-asymmetric', 'right-asymmetric',
+#   'f2', 'n2', or 'o2'.
 #
 # [*bitmap*]
 #   Create a bitmap for the array with the given filename.
