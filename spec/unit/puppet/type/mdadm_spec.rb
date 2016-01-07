@@ -162,7 +162,7 @@ describe Puppet::Type.type(:mdadm) do
                           :parity => 'left-asymmetric',
                           :provider => provider)
     end
-    it { expect { resource }.to raise_error(Puppet::Error, /Parity can only be set on raid5\/6/) }
+    it { expect { resource }.to raise_error(Puppet::Error, /Parity can only be set on raid5\/6\/10/) }
   end
 
   describe 'resource with invalid parity' do
@@ -174,7 +174,7 @@ describe Puppet::Type.type(:mdadm) do
                           :provider => provider)
     end
     it { expect { resource }.to raise_error(Puppet::Error,
-        /Invalid value "foo". Valid values are left-symmetric, right-symmetric, left-asymmetric, right-asymmetric/ ) }
+        /Invalid value "foo". Valid values are left-symmetric, right-symmetric, left-asymmetric, right-asymmetric, f2, n2, o2/ ) }
   end
 
   describe 'when changing the ensure' do
