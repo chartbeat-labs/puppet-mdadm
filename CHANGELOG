@@ -1,3 +1,10 @@
+2016-06-06 Release 1.1.0
+- Set rspec-puppet dependency from fork back to upstream
+- Add raid10 support
+
+2015-05-28 Release 1.0.1
+- Improve metadata.json to specify supported distro
+
 2015-03-09 Release 1.0.0
 - Add groups to the Gemfile
 - Remove rspec-system-puppet in favor of the puppetlabs supported beaker
