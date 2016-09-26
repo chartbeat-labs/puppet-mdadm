@@ -19,6 +19,15 @@ class mdadm::params {
       }
       $include_cron = true
     }
+    'RedHat': {
+      $package_name = 'mdadm'
+      $package_ensure = 'present'
+      $service_name = 'mdmonitor'
+      $service_ensure = 'running'
+      $service_manage = false
+      $service_hasstatus = false
+      $include_cron = true
+    }
     default: {
       fail("${::operatingsystem} not supported")
     }
