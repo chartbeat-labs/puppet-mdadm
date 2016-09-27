@@ -46,6 +46,16 @@ optional.
 
 The available parameters are the following:
 
+#### Note on parameters with RedHat OSFamily:
+The following parameters do not work with RedHat based systems:
+```puppet
+mdadm { $name :
+    ...
+    generate_conf    => $generate_conf,
+    update_initramfs => $update_initramfs,
+  }
+```
+
 ### Parameters
 *See puppet doc*
 
