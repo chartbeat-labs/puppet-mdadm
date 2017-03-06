@@ -18,6 +18,7 @@ class mdadm::params {
         $service_hasstatus = true
       }
       $include_cron = true
+      $include_cron_daily = true
     }
     default: {
       fail("${::operatingsystem} not supported")
