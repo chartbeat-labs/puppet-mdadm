@@ -1,3 +1,10 @@
+2018-05-29 Release 2.0.0
+- Remove stdlib dependency
+- Remove support for puppet 3
+- Add DataTypes to parameters
+- Various deprecation fixes for tests
+- Update test matrix to test puppet4/5 with correct ruby versions
+
 2016-06-06 Release 1.1.0
 - Set rspec-puppet dependency from fork back to upstream
 - Add raid10 support

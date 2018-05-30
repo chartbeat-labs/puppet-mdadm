@@ -10,7 +10,7 @@ describe provider_class do
     @resource = stub('resource')
     @resource.stubs(:name).returns('/dev/md1')
     @resource.stubs(:[]).with(:devices).returns(['/dev/sdb', '/dev/sdc'])
-    @resource.stubs(:[]).with(:level).returns(0)
+    @resource.stubs(:[]).with(:level).returns('0')
     @resource.stubs(:[]).with(:metadata).returns('0.9')
     @resource.stubs(:[]).with(:active_devices).returns(nil)
     @resource.stubs(:[]).with(:spare_devices).returns(nil)
@@ -37,8 +37,8 @@ describe provider_class do
 
     it "should include the supplied parameters" do
       @resource.stubs(:[]).with(:devices).returns(['/dev/sdb', '/dev/sdc', '/dev/sdd', '/dev/sde'])
-      @resource.stubs(:[]).with(:active_devices).returns(3)
-      @resource.stubs(:[]).with(:spare_devices).returns(1)
+      @resource.stubs(:[]).with(:active_devices).returns('3')
+      @resource.stubs(:[]).with(:spare_devices).returns('1')
       @resource.stubs(:[]).with(:metadata).returns('1.2')
       @resource.stubs(:[]).with(:parity).returns('right-symmetric')
       @resource.stubs(:[]).with(:chunk).returns('512')
