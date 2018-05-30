@@ -59,18 +59,18 @@
 # }
 #
 define mdadm::array (
-  $ensure,
-  $level,
-  $devices,
-  $active_devices = undef,
-  $spare_devices = undef,
-  $chunk = undef,
-  $parity = undef,
-  $bitmap = undef,
-  $metadata = undef,
-  $force = undef,
-  $generate_conf = undef,
-  $update_initramfs = undef,
+  Enum['created', 'assembled', 'stopped', 'absent'] $ensure,
+  String $level,
+  Array[String] $devices,
+  Optional[String] $active_devices    = undef,
+  Optional[String] $spare_devices     = undef,
+  Optional[String] $chunk             = undef,
+  Optional[String] $parity            = undef,
+  Optional[String] $bitmap            = undef,
+  Optional[String] $metadata          = undef,
+  Optional[Boolean] $force            = undef,
+  Optional[Boolean] $generate_conf    = undef,
+  Optional[Boolean] $update_initramfs = undef,
 ) {
   include mdadm
 
