@@ -169,8 +169,7 @@ and while the mdadm type autorequires the mdadm package, there is no way to ensu
 that the package gets installed.
 
 The mdadm::array is a simple wrapper that includes the mdadm class to ensure the
-mdadm package is installed. It doesn't do any parameter validation, it just passes
-the parameters to the mdadm type.
+mdadm package is installed.
 
 So if you don't want to have to do this:
 
