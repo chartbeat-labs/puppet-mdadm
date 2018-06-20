@@ -5,7 +5,8 @@ describe 'mdadm', :type => :class do
     # Default facts used for contexts
     let(:facts) {{
       :osfamily => 'Debian',
-      :lsbdistrelease => '12.04',
+      :operatingsystem => 'Ubuntu',
+      :operatingsystemrelease => '12.04',
     }}
 
     context 'with no parameters' do
@@ -46,7 +47,8 @@ describe 'mdadm', :type => :class do
     context 'with older mdadm package' do
       let(:facts) {{
         :osfamily => 'Debian',
-        :lsbdistrelease => '10.04',
+        :operatingsystem => 'Ubuntu',
+        :operatingsystemrelease => '10.04',
       }}
 
       it { should contain_service('mdadm').with({
@@ -54,6 +56,17 @@ describe 'mdadm', :type => :class do
         })
       }
     end
+
+    context 'with systemd based systems' do
+      let(:facts) {{
+        :osfamily => 'Debian',
+        :operatingsystem => 'Ubuntu',
+        :operatingsystemrelease => '16.04',
+      }}
+
+      it { should contain_service('mdmonitor') }
+    end
+
 
     context 'with hassstatus overriden' do
       let(:params) {{

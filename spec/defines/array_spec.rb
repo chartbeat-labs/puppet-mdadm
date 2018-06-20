@@ -7,7 +7,8 @@ describe 'mdadm::array', :type => :define do
 
   let(:facts) {{
     :osfamily => 'Debian',
-    :lsbdistrelease => '12.04',
+    :operatingsystem => 'Ubuntu',
+    :operatingsystemrelease => '12.04',
   }}
 
   context 'when creating an array' do

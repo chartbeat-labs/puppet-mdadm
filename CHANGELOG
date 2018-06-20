@@ -1,3 +1,6 @@
+2018-06-20 Release 2.0.1
+- Fix bug with systemd init systems and mdadm service name.
+
 2018-05-29 Release 2.0.0
 - Remove stdlib dependency
 - Remove support for puppet 3
