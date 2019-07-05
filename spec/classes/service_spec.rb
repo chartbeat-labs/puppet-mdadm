@@ -57,11 +57,31 @@ describe 'mdadm', :type => :class do
       }
     end
 
-    context 'with systemd based systems' do
+    context 'with an older Ubuntu systemd based system' do
       let(:facts) {{
         :osfamily => 'Debian',
         :operatingsystem => 'Ubuntu',
         :operatingsystemrelease => '16.04',
+      }}
+
+      it { should contain_service('mdadm') }
+    end
+
+    context 'with a newer Ubuntu systemd based system' do
+      let(:facts) {{
+        :osfamily => 'Debian',
+        :operatingsystem => 'Ubuntu',
+        :operatingsystemrelease => '18.04',
+      }}
+
+      it { should contain_service('mdmonitor') }
+    end
+
+    context 'with a older Debian systemd based system' do
+      let(:facts) {{
+        :osfamily => 'Debian',
+        :operatingsystem => 'Debian',
+        :operatingsystemrelease => '8',
       }}
 
       it { should contain_service('mdmonitor') }
