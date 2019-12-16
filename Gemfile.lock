@@ -91,7 +91,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     ethon (0.11.0)
       ffi (>= 1.3.0)
-    excon (0.62.0)
+    excon (0.71.0)
     facter (2.5.1)
     facterdb (0.5.2)
       facter
