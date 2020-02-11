@@ -2,11 +2,10 @@ require 'puppet'
 
 Puppet::Type.type(:mdadm).provide(:mdadm) do
   desc "Manage Md raid devices"
+  confine :osfamily => [:redhat]
 
   commands  :mdadm_cmd => 'mdadm',
-            :mkconf => '/usr/share/mdadm/mkconf',
-            :yes => 'yes',
-            :update_initramfs => 'update-initramfs'
+            :yes => 'yes'
 
   def create
     cmd = [command(:mdadm_cmd)]
@@ -25,8 +24,6 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
     end
 
     execute(cmd.join(" "))
-    make_conf if resource[:generate_conf]
-    update_initramfs if resource[:update_initramfs]
   end
 
   def assemble
@@ -35,8 +32,6 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
     cmd << resource.name
     cmd << resource[:devices]
     execute(cmd)
-    make_conf if resource[:generate_conf]
-    update_initramfs if resource[:update_initramfs]
   end
 
   def stop
@@ -45,8 +40,6 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
     cmd << "--stop"
     cmd << resource.name
     execute(cmd)
-    make_conf if resource[:generate_conf]
-    update_initramfs if resource[:update_initramfs]
   end
 
   def exists?
@@ -63,15 +56,5 @@ Puppet::Type.type(:mdadm).provide(:mdadm) do
         raise
       end
     end
-  end
-
-  private
-
-  def make_conf
-    execute([command(:mkconf), "force-generate"])
-  end
-
-  def update_initramfs
-    execute([command(:update_initramfs), '-u'])
   end
 end

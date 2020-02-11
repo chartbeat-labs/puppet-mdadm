@@ -5,7 +5,7 @@
 class mdadm::config {
 
   if ($mdadm::include_cron) {
-    file { '/etc/cron.d/mdadm' :
+    file { $mdadm::params::cron_name :
       ensure => 'present',
     }
   }

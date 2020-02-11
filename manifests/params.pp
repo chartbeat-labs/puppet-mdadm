@@ -30,9 +30,20 @@ class mdadm::params {
       }
 
       $include_cron = true
+      $cron_name = '/etc/cron.d/mdadm'
+    }
+    'RedHat': {
+      $package_name = 'mdadm'
+      $package_ensure = 'present'
+      $service_name = 'mdmonitor'
+      $service_ensure = 'stopped'
+      $service_manage = false
+      $service_hasstatus = true
+      $include_cron = true
+      $cron_name = '/etc/cron.d/raid-check'
     }
     default: {
-      fail("${::operatingsystem} not supported")
+      fail(" osfamily: ${::osfamily}, operatingsystem: ${::operatingsystem} not supported")
     }
   }
 }
