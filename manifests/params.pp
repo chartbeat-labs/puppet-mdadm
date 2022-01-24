@@ -4,7 +4,7 @@
 # It sets variables according to platform
 #
 class mdadm::params {
-  case $::osfamily {
+  case $::facts['osfamily'] {
     'Debian': {
       $package_name = 'mdadm'
       $package_ensure = 'present'
@@ -12,7 +12,7 @@ class mdadm::params {
       $service_ensure = 'running'
       $service_manage = true
       # Older mdadm packages don't have a service status
-      if versioncmp($lsbdistrelease, '12') < 0 {
+      if versioncmp($::facts['lsbdistrelease'], '12') < 0 {
         $service_hasstatus = false
       } else {
         $service_hasstatus = true
@@ -20,7 +20,7 @@ class mdadm::params {
       $include_cron = true
     }
     default: {
-      fail("${::operatingsystem} not supported")
+      fail("${::facts['operatingsystem']} not supported")
     }
   }
 }
