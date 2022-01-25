@@ -24,7 +24,7 @@ class mdadm::params {
       $service_manage = true
 
       # Older mdadm packages don't have a service status
-      if versioncmp($facts['operatingsystemrelease'], '12.04') < 0 {
+      if ($facts['operatingsystem'] == 'Ubuntu' and versioncmp($facts['operatingsystemrelease'], '12.04') < 0) {
         $service_hasstatus = false
       } else {
         $service_hasstatus = true
