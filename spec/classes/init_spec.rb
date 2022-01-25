@@ -1,29 +1,33 @@
 require 'spec_helper'
 
 describe 'mdadm' do
-  context 'supported operating systems' do
-    let(:params) {{ }}
-    let(:facts) {{
-      :osfamily => 'Debian',
-      :operatingsystem => 'Ubuntu',
-      :operatingsystemrelease => '12.04',
-    }}
-      it { should contain_class('mdadm::params') }
 
+  on_supported_os.each do |os, facts|
+    context "supported operating system: #{os}" do
+      let(:params) {{ }}
+      let(:facts) { facts }
+
+      it { should contain_class('mdadm::params') }
       it { should contain_class('mdadm::install') }
       it { should contain_class('mdadm::config') }
       it { should contain_class('mdadm::service') }
+    end
   end
 
   context 'unsupported operating system' do
-    describe 'mdadm class without any parameters on Solaris/Nexenta' do
-      let(:facts) {{
-        :osfamily        => 'Solaris',
-        :operatingsystem => 'Nexenta',
-        :operatingsystemrelease => '4',
-      }}
+    test_on = {
+      supported_os: [
+        {
+          'operatingsystem'        => 'Darwin',
+        },
+      ],
+    }
 
-      it { expect { should raise_error(Puppet::Error, /Nexenta not supported/) }}
+    on_supported_os(test_on).each do |os, facts|
+      let(:facts) { facts }
+      describe "mdadm class without any parameters on #{os}" do
+        it { expect { should raise_error(Puppet::Error, /#{facts[:os]['name']} not supported/) }}
+      end
     end
   end
 end
