@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe 'check_devices' do
-  let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
-
   describe 'argument handling' do
     it 'fails with no arguments' do
       expect { scope.function_check_devices([]) }.to raise_error(Puppet::ParseError)
