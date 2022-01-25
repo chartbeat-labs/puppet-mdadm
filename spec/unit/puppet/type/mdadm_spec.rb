@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Puppet::Type.type(:mdadm) do
 
   before :each do
-    Puppet::Type.type(:mdadm).stubs(:defaultprovider).returns(providerclass)
+    allow(Puppet::Type.type(:mdadm)).to receive(:defaultprovider).and_return(providerclass)
   end
 
   let(:providerclass) do
